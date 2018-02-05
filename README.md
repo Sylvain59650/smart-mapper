@@ -1,80 +1,178 @@
-# Read me
+# Smart Mapper
 
-## Goal
-
-This project *node-data-transformer* is useful when you have to transform data that you have received but in a format that does not suit
-your needs.
+Smart Mapper is useful when you want transform data that you have received.
 
 ## How it works
+    SmartMapper.mapping(template, entryData);
 
-The main method transform (in main.js) take two paramaters, the first is a template that looks like :
+    where 
+    template: json object contain 2 arrays
+        mappings: json object that contain in keys the destination, and in values the path in   the specific object to extract
+        rules: json object that contains methods to execute on a particular field during the transformation
+  entryData: json data to transform
 
-```
-let givenTemplate = {
-        mappings: {
-            id: 'source.id',
-            totransform: 'source.totransform',
-            subdata: {
-                subfield: 'source.subfield'
-            }
-        },
-        operations: [
-            {
-                run: (data) => data.toLowerCase(), on: 'totransform',
-            }
-        ]
-    };
-```
+Returns
 
-On it you could see two substructures :
+    json data tranformed
 
-* mappings: json object that contain in keys the destination, and in values the path in the specific object to extract
-* operations: an array that contains objects with specifice methods to execute on particular fields during the transformation
+Example
+  
+    let entryData = [{
+    person: {
+      id: '1',
+      firstname: 'Jean',
+      lastname: 'Valjean',
+      age: 50,
+      jobs: [{ title: 'arboriste', type: 'first' }, { title: "braconnier", type: "after" }, { title: 'maire', type: 'LATEST' }],
+      friends: ['Cosette', 'Fauchelevent'],
+      address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
+    }
+  },
+  {
+    person: {
+      id: '2',
+      firstname: 'Emmanuel',
+      lastname: 'Macron',
+      age: 40,
+      jobs: [{ title: 'President', type: 'LATEST' }, { title: 'Banquier', type: 'first' }],
+      friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
+      address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
+    }
+  },
+  {
+    person: {
+      id: '3',
+      firstname: 'Mario',
+      lastname: '',
+      age: 35,
+      jobs: [{ title: 'Plombier', type: 'first' }],
+      friends: ["Luigi", "Sonic"]
+    }
+  }
+];
 
-And take another parameter that are the data to transform in the new format:
 
-```
-let givenData = { 
-    source: {
+
+    let template = {
+  mappings: {
+    id: "person.id",
+    lastname: 'person.lastname',
+    firstname: 'person.firstname',
+    age: 'person.age',
+    job: 'person.jobs',
+    nbFriends: 'person.friends',
+    address: "person.address"
+  },
+  rules: [
+    { on: "address", execute: address => { if (address != null) return [address.street, address.zip, address.city, address.country.code].join(","); return "inconnue"; } },
+    {
+      on: 'job',
+      execute: jobs => {
+        var latest = jobs.find(x => x.type === 'LATEST');
+        if (latest != null) return latest.title;
+        return "inconnu";
+      }
+    },
+    { on: "nbFriends", execute: friends => friends.length }
+  ]
+};
+
+
+
+
+    let outData = SmartMapper.mapping(template, entryData);
+
+
+<table border="1">
+<tr><td>before</td><td>after</td></tr>
+<tr>
+<td>
+<pre>
+    [{
+        person: {
         id: '1',
-        totransform: 'BON',
-        subdata: {
-            subfield: 'subfieldvalue'
+        firstname: 'Jean',
+        lastname: 'Valjean',
+        age: 50,
+        jobs: [{ title: 'arboriste', type: 'first' }, { title: "braconnier", type: "after" }, { title: 'maire', type: 'LATEST' }],
+        friends: ['Cosette', 'Fauchelevent'],
+        address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
+        }
+    },
+    {
+        person: {
+        id: '2',
+        firstname: 'Emmanuel',
+        lastname: 'Macron',
+        age: 40,
+        jobs: [{ title: 'President', type: 'LATEST' }, { title: 'Banquier', type: 'first' }],
+        friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
+        address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
+        }
+    },
+    {
+        person: {
+        id: '3',
+        firstname: 'Mario',
+        lastname: '',
+        age: 35,
+        jobs: [{ title: 'Plombier', type: 'first' }],
+        friends: ["Luigi", "Sonic"]
         }
     }
-}
-```
+    ]
+</pre>
+</td>
+<td>
+<pre>
+    [ { id: '1',
+        lastname: 'Valjean',
+        firstname: 'Jean',
+        age: 50,
+        job: 'maire',
+        nbFriends: 2,
+        address: 'rue de l\'Ouest,75006,Paris,FR' },
+    { id: '2',
+        lastname: 'Macron',
+        firstname: 'Emmanuel',
+        age: 40,
+        job: 'President',
+        nbFriends: 5,
+        address: 'Rue de l\'Elysée,59000,Paris,FR' },
+    { id: '3',
+        lastname: null,
+        firstname: 'Mario',
+        age: 35,
+        job: 'inconnu',
+        nbFriends: 2,
+        address: 'inconnue' } ]
+</pre>
+</td>
+</tr>
+</table>
 
-The method will produce this:
+With the following template
 
-```
-let actual = { 
-    id: '1',
-    totransform: 'bon',
-    subdata: {
-        subfield: 'subfieldvalue'
+    {
+    mappings: {
+        id: "person.id",
+        lastname: 'person.lastname',
+        firstname: 'person.firstname',
+        age: 'person.age',
+        job: 'person.jobs',
+        nbFriends: 'person.friends',
+        address: "person.address"
+    },
+    rules: [
+        { on: "address", execute: address => { if (address != null) return [address.street, address.zip, address.city, address.country.code].join(","); return "inconnue"; } },
+        {
+        on: 'job',
+        execute: jobs => {
+            var latest = jobs.find(x => x.type === 'LATEST');
+            if (latest != null) return latest.title;
+            return "inconnu";
+        }
+        },
+        { on: "nbFriends", execute: friends => friends.length }
+    ]
     }
-}
-```
-
-For information, the main.transform() returns a bluebird promise.
-
-## How to launch the tests ?
-
-* npm run build: launch eslint, the mocha tests and istanbul for the coverage.
-* npm run eslint: run the lint check
-* npm run test: launch the mocha tests
-* npm run istanbul: compute the coverage
-
-## Dependencies
-
-* lodash - https://lodash.com/: the used fonction from this lib are :
-
-    1. reduce: in order to aggregate the result from the transformation process
-    2. get: in order to retrieve the value from the source
-    3. isObject: in order to check on the type of data we work: simple field with a simple value or an object
-    4. find: in order to make a link between an operation and a field in the source
-    5. isArray: check if we work on an array
-    6. isEmpty: check if we have to do the transformation or if we have the compulsory paramaters in order to make the job
-
-* mocha - https://mochajs.org/: in order to launch the tests from the main.spec.js, be careful of the *configureMocha.js* that permits to launch chai/chai as promised.

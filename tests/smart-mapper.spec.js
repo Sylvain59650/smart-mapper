@@ -1,61 +1,64 @@
-const _ = require('lodash');
-
 const JsMapping = require('../sources/smart-mapper');
 
-let givenTemplate = {
+let template = {
   mappings: {
-    id: "identity.id",
-    lastname: 'identity.lastname',
-    firstname: 'identity.firstname',
-    age: 'identity.age',
-    goodlooking: 'identity.goodlooking',
-    job: 'identity.jobs',
-    missingField: 'identity.doesnotexist',
-    friends: 'identity.friends',
-    address: {
-      streetLine: 'identity.address.streetLine',
-      zipPostalCode: 'identity.address.zipPostalCode',
-      locality: 'identity.address.locality',
-      countryCode: 'identity.address.country.code'
-    }
+    id: "person.id",
+    lastname: 'person.lastname',
+    firstname: 'person.firstname',
+    age: 'person.age',
+    job: 'person.jobs',
+    nbFriends: 'person.friends',
+    address: "person.address"
   },
   rules: [
-    { on: 'job', execute: jobs => jobs.find(x => x.type == 'LATEST').label }
+    { on: "address", execute: address => { if (address != null) return [address.street, address.zip, address.city, address.country.code].join(","); return "inconnue"; } },
+    {
+      on: 'job',
+      execute: jobs => {
+        var latest = jobs.find(x => x.type === 'LATEST');
+        if (latest != null) return latest.title;
+        return "inconnu";
+      }
+    },
+    { on: "nbFriends", execute: friends => friends.length }
   ]
 };
 
 
 let entryData = [{
-    identity: {
+    person: {
       id: '1',
-      lastname: 'Bon',
       firstname: 'Jean',
-      age: 30,
-      superflu: 'superflu',
-      goodlooking: true,
-      jobs: [{ label: 'Developper', type: 'LATEST' }],
-      friends: ['anne', 'ines'],
-      address: { streetLine: 'Rue de la boucherie', zipPostalCode: '59000', locality: 'Les Weppes', country: { code: 'FR' } }
+      lastname: 'Valjean',
+      age: 50,
+      jobs: [{ title: 'arboriste', type: 'first' }, { title: "braconnier", type: "after" }, { title: 'maire', type: 'LATEST' }],
+      friends: ['Cosette', 'Fauchelevent'],
+      address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
     }
   },
   {
-    identity: {
+    person: {
       id: '2',
-      lastname: 'Verger',
-      firstname: 'Framboise',
-      age: 99,
-      superflu: 'superflu',
-      goodlooking: false,
-      jobs: [{ label: 'BigBoss', type: 'LATEST' }, { label: 'Director', type: 'OTHER' }],
-      friends: ['anne', 'ines', 'Jean Bon'],
-      address: { streetLine: 'Rue de la vieillesse', zipPostalCode: '59000', locality: 'Les Weppes', country: { code: 'FR' } }
+      firstname: 'Emmanuel',
+      lastname: 'Macron',
+      age: 40,
+      jobs: [{ title: 'President', type: 'LATEST' }, { title: 'Banquier', type: 'first' }],
+      friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
+      address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
+    }
+  },
+  {
+    person: {
+      id: '3',
+      firstname: 'Mario',
+      lastname: '',
+      age: 35,
+      jobs: [{ title: 'Plombier', type: 'first' }],
+      friends: ["Luigi", "Sonic"]
     }
   }
 ];
 
 
-let outData = JsMapping.mapping(givenTemplate, entryData);
+let outData = JsMapping.mapping(template, entryData);
 console.log(outData);
-
-// let dd = JsMapping.mapping(givenTemplate, { identity: { id: 1 } });
-// console.log(dd);
