@@ -1,0 +1,7 @@
+.git/
+.vs/
+coverage/
+.vscode/
+npm-debug.log
+npm-debug.log.*
+node_modules/

@@ -1,0 +1,31 @@
+{
+  "author": "Sylvain Longepee",
+  "license": "MIT",
+  "groupId": "slongepee",
+  "artifactId": "smart-mapper",
+  "version": "0.0.9",
+  "main": "tests/smart-mapper.spec.js",
+  "name": "smart-mapper",
+  "description": "A tool to mapping data in another format",
+  "scripts": {
+    "eslint": "eslint --fix './*.js'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-remove-comments": "^2.0.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-debug": "^3.2.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-umd": "^0.2.1",
+    "gulp-util": "^3.0.8",
+    "gulp-watch": "^5.0.0",
+    "lodash": "^4.17.5"
+  }
+}
