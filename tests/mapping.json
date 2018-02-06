@@ -1,0 +1,283 @@
+﻿[{
+    "Id": 0,
+    "Cd": null,
+    "Title": "M1",
+    "Identifiant": null,
+    "Objet": null,
+    "TypeElem": { "42": "text" },
+    "NatureDernModif": null,
+    "ModifPiloteDate": null,
+    "ModifiedDate": null,
+    "ParentCd": null,
+    "Langue": null,
+    "DirGest": null,
+    "Pilote": null,
+    "ProcRattach": {
+      "-1": "NO"
+    },
+    "SsProcRattach": null,
+    "LectConseillee": null,
+    "FileRef": null,
+    "Childs": [
+
+    ],
+    "Filiale": null,
+    "IdFiliale": 0,
+    "CodeSociete": null,
+    "TypeMiseAJour": null,
+    "ExplicationsMAJ": null,
+    "BookMark": 0,
+    "Version": null,
+    "DocumentAssocieFiliale": null,
+    "DocumentAssocieGroupe": null,
+    "DocumentsAssociesFiliales": null,
+    "DocumentsAssociesGroupes": null,
+    "DocumentAssocieExterne": null,
+    "DocumentsAssocies": null,
+    "DocumentParent": null,
+    "DomaineId": 0,
+    "ProcessusExp": 0,
+    "SousProcessusExp": 0,
+    "ContentType": null,
+    "BiblioName": null,
+    "ExplicationsMAJDerniereVersionMajeure": null,
+    "NatureDernModifDerniereVersionMajeure": null,
+    "ModifPiloteDateDerniereVersionMajeure": null
+  },
+  {
+    "Id": 35,
+    "Cd": "35",
+    "Title": "rrrr",
+    "Identifiant": "eeee",
+    "Objet": "ggg",
+    "TypeElem": {
+      "8": "Note de processus"
+    },
+    "NatureDernModif": "a",
+    "ModifPiloteDate": "2007-12-30T23:00:00Z",
+    "ModifiedDate": "2017-11-30T10:57:12Z",
+    "ParentCd": "0",
+    "Langue": {
+      "1": "Français"
+    },
+    "DirGest": {},
+    "Pilote": {},
+    "ProcRattach": {
+      "23": "M1 : Management stratégique"
+    },
+    "SsProcRattach": {
+      "55": "M1.01 : Stratégie Groupe"
+    },
+    "LectConseillee": {
+      "2": "Tous les collaborateurs"
+    },
+    "FileRef": "/sites/egisbook/EB_B17/AGE.licences.txt",
+    "Childs": [],
+    "Filiale": {
+      "15": "Egis SA"
+    },
+    "IdFiliale": 15,
+    "CodeSociete": "B17",
+    "TypeMiseAJour": {
+      "2": "Moyenne"
+    },
+    "ExplicationsMAJ": "tt",
+    "BookMark": 0,
+    "Version": "0.2",
+    "DocumentAssocieFiliale": {},
+    "DocumentAssocieGroupe": {},
+    "DocumentsAssociesFiliales": [],
+    "DocumentsAssociesGroupes": [],
+    "DocumentAssocieExterne": "",
+    "DocumentsAssocies": null,
+    "DocumentParent": null,
+    "DomaineId": 3,
+    "ProcessusExp": 25,
+    "SousProcessusExp": 63,
+    "ContentType": null,
+    "BiblioName": "EB_B17",
+    "ExplicationsMAJDerniereVersionMajeure": "",
+    "NatureDernModifDerniereVersionMajeure": "",
+    "ModifPiloteDateDerniereVersionMajeure": null
+  },
+  {
+    "Id": 36,
+    "Cd": "36",
+    "Title": "zz",
+    "Identifiant": "aa",
+    "Objet": "a",
+    "TypeElem": {
+      "3": "Procédure"
+    },
+    "NatureDernModif": "g",
+    "ModifPiloteDate": "2017-12-11T23:00:00Z",
+    "ModifiedDate": "2017-12-03T08:01:17Z",
+    "ParentCd": "0",
+    "Langue": {
+      "1": "Français"
+    },
+    "DirGest": {},
+    "Pilote": {},
+    "ProcRattach": {
+      "23": "M1 : Management stratégique"
+    },
+    "SsProcRattach": {
+      "55": "M1.01 : Stratégie Groupe"
+    },
+    "LectConseillee": {
+      "2": "Tous les collaborateurs"
+    },
+    "FileRef": "/sites/egisbook/EB_B17/zz",
+    "Childs": [],
+    "Filiale": {
+      "15": "Egis SA"
+    },
+    "IdFiliale": 15,
+    "CodeSociete": "B17",
+    "TypeMiseAJour": {
+      "2": "Moyenne"
+    },
+    "ExplicationsMAJ": "v",
+    "BookMark": 0,
+    "Version": "1.3",
+    "DocumentAssocieFiliale": {},
+    "DocumentAssocieGroupe": {},
+    "DocumentsAssociesFiliales": [],
+    "DocumentsAssociesGroupes": [],
+    "DocumentAssocieExterne": "",
+    "DocumentsAssocies": null,
+    "DocumentParent": null,
+    "DomaineId": 3,
+    "ProcessusExp": 30,
+    "SousProcessusExp": 87,
+    "ContentType": null,
+    "BiblioName": "EB_B17",
+    "ExplicationsMAJDerniereVersionMajeure": "",
+    "NatureDernModifDerniereVersionMajeure": "",
+    "ModifPiloteDateDerniereVersionMajeure": null
+  },
+  {
+    "Id": 40,
+    "Cd": "40",
+    "Title": "expe",
+    "Identifiant": "40",
+    "Objet": "z",
+    "TypeElem": {
+      "4": "Instruction"
+    },
+    "NatureDernModif": "r",
+    "ModifPiloteDate": "2017-12-05T23:00:00Z",
+    "ModifiedDate": "2017-12-07T15:42:42Z",
+    "ParentCd": "0",
+    "Langue": {
+      "1": "Français"
+    },
+    "DirGest": {
+      "31": "COM"
+    },
+    "Pilote": {},
+    "ProcRattach": {
+      "23": "M1 : Management stratégique"
+    },
+    "SsProcRattach": {
+      "55": "M1.01 : Stratégie Groupe"
+    },
+    "LectConseillee": {
+      "2": "Tous les collaborateurs"
+    },
+    "FileRef": "/sites/egisbook/EB_B17/expe",
+    "Childs": [],
+    "Filiale": {
+      "15": "Egis SA"
+    },
+    "IdFiliale": 15,
+    "CodeSociete": "B17",
+    "TypeMiseAJour": {
+      "2": "Moyenne"
+    },
+    "ExplicationsMAJ": "e",
+    "BookMark": 0,
+    "Version": "0.3",
+    "DocumentAssocieFiliale": {},
+    "DocumentAssocieGroupe": {},
+    "DocumentsAssociesFiliales": [],
+    "DocumentsAssociesGroupes": [],
+    "DocumentAssocieExterne": "",
+    "DocumentsAssocies": [],
+    "DocumentParent": {
+      "Id": 34,
+      "Title": "Procédure d'installation22",
+      "BiblioName": "EB_B17"
+    },
+    "DomaineId": 1,
+    "ProcessusExp": 0,
+    "SousProcessusExp": 0,
+    "ContentType": null,
+    "BiblioName": "EB_B17",
+    "ExplicationsMAJDerniereVersionMajeure": "",
+    "NatureDernModifDerniereVersionMajeure": "",
+    "ModifPiloteDateDerniereVersionMajeure": null
+  },
+  {
+    "Id": 41,
+    "Cd": "41",
+    "Title": "41",
+    "Identifiant": "41",
+    "Objet": "s",
+    "TypeElem": {
+      "3": "Procédure"
+    },
+    "NatureDernModif": "r",
+    "ModifPiloteDate": "2017-12-05T23:00:00Z",
+    "ModifiedDate": "2017-12-06T14:59:57Z",
+    "ParentCd": "0",
+    "Langue": {
+      "1": "Français"
+    },
+    "DirGest": {
+      "31": "COM"
+    },
+    "Pilote": {},
+    "ProcRattach": {
+      "23": "M1 : Management stratégique"
+    },
+    "SsProcRattach": {
+      "55": "M1.01 : Stratégie Groupe"
+    },
+    "LectConseillee": {
+      "2": "Tous les collaborateurs"
+    },
+    "FileRef": "/sites/egisbook/EB_B17/41",
+    "Childs": [],
+    "Filiale": {
+      "15": "Egis SA"
+    },
+    "IdFiliale": 15,
+    "CodeSociete": "B17",
+    "TypeMiseAJour": {
+      "2": "Moyenne"
+    },
+    "ExplicationsMAJ": "d",
+    "BookMark": 0,
+    "Version": "0.2",
+    "DocumentAssocieFiliale": {},
+    "DocumentAssocieGroupe": {},
+    "DocumentsAssociesFiliales": [],
+    "DocumentsAssociesGroupes": [],
+    "DocumentAssocieExterne": "",
+    "DocumentsAssocies": [],
+    "DocumentParent": {
+      "Id": 35,
+      "Title": "rrrr",
+      "BiblioName": "EB_B17"
+    },
+    "DomaineId": 1,
+    "ProcessusExp": 27,
+    "SousProcessusExp": 0,
+    "ContentType": null,
+    "BiblioName": "EB_B17",
+    "ExplicationsMAJDerniereVersionMajeure": "",
+    "NatureDernModifDerniereVersionMajeure": "",
+    "ModifPiloteDateDerniereVersionMajeure": null
+  }
+]

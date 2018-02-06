@@ -21,8 +21,11 @@
     return anything !== null && typeof anything === "object";
   }
 
+  SmartMapper.get = get;
 
   function get(object, path, defaultValue) {
+    path = path.replace("[", ".").replace("]", "");
+    if (path.startsWith(".")) path = path.substr(1);
     var ps = path.split(".");
     let i = 0;
     const length = ps.length;
@@ -30,27 +33,33 @@
       object = object[ps[i]];
       i++;
     }
-    return object || defaultValue;
+    if (object == null) return defaultValue;
+    return object;
   }
 
-
-  function mappingObject(mappings, rules, data) {
+  function mappingObject(compiles, data) {
     var target = {};
-    for (var key in mappings) {
-      var mkey = mappings[key];
-      if (!isObject(mkey)) {
-        let value = get(data, mkey, null);
-        let operate = null;
-        if (rules != null) {
-          operate = rules.find(x => x.on === key);
-        }
-        target[key] = operate ? operate.execute(value) : value;
-      } else {
-        target[key] = mappingObject(mkey, rules, data);
+    for (var compile of compiles) {
+      var value = get(data, compile.relateTo, null);
+      if (compile.operate) {
+        value = compile.operate.execute(value, data);
       }
+      target[compile.key] = value;
     }
     return target;
+  }
 
+  function compile(template) {
+    var compiles = [];
+    for (var key in template.mappings) {
+      var compile = {
+        key: key,
+        relateTo: template.mappings[key],
+        operate: template.rules.find(x => x.on === key)
+      };
+      compiles.push(compile);
+    }
+    return compiles;
   }
 
   /*
@@ -60,15 +69,15 @@
    * @param {json} - data : data to transform
    */
   SmartMapper.mapping = function(template, data) {
+    var compiles = compile(template);
     if (Array.isArray(data)) {
-      return data.reduce((target, item) => {
-        if (isObject(item)) {
-          target.push(mappingObject(template.mappings, template.rules, item));
-        }
-        return target;
-      }, []);
+      var target = [];
+      for (var i = 0; i < data.length; i++) {
+        target.push(mappingObject(compiles, data[i]));
+      }
+      return target;
     }
-    return mappingObject(template.mappings, template.rules, data);
+    return mappingObject(compiles, data);
   }
 
 
