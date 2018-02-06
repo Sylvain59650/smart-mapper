@@ -20,7 +20,10 @@ OR
   yarn add smart-mapper --save
 </code>
 
-# References in browser 
+## References for Nodejs
+const SmartMapper = require('smart-mapper');
+
+## References in browser 
 <code>
 
   &lt;script src="./node_modules/smart-mapper/distrib/smart-mapper.min.js"&gt;&lt;/script&gt;
@@ -42,7 +45,33 @@ Returns
 
     json data tranformed
 
-Example
+Example 1 : Ultra simple
+
+Given an array of people with name and age properties, we want to get a table with these people but with the FirstName property instead of name and without the age property.
+
+    const SmartMapper = require('smart-mapper');
+
+    var persons = [
+    { name: 'Matt', age: 30 },
+    { name: 'Edouard', age: 28 },
+    { name: 'Guillaume', age: 29 },
+    { name: 'Roger', age: 51 }
+    ];
+    var template = { mappings: { FirstName: 'name' } };
+
+    let outData = SmartMapper.mapping(template, persons);
+    console.log(outData);
+
+    /*    
+        [ { FirstName: 'Matt' },
+        { FirstName: 'Edouard' },
+        { FirstName: 'Guillaume' },
+        { FirstName: 'Roger' } ]
+    */
+
+
+
+Example 2
   
     let entryData = [{
     person: {
@@ -54,9 +83,7 @@ Example
       friends: ['Cosette', 'Fauchelevent'],
       address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
     }
-    },
-  
-    {
+    },{
     person: {
       id: '2',
       firstname: 'Emmanuel',
@@ -66,9 +93,7 @@ Example
       friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
       address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
     }
-  },
-  
-    {
+    },{
     person: {
       id: '3',
       firstname: 'Mario',

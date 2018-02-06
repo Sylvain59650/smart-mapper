@@ -12,7 +12,12 @@ var template = {
     parentUid: "data.ParentUid",
     title: "data.Title"
   },
-  rules: []
+  rules: [
+    { on: "parentUid", execute: parentUid => parentUid.replace("EB_", "") },
+    { on: "uid", execute: uid => uid.replace("EB_", "") },
+    { on: "x", execute: x => parseInt(x) },
+    { on: "y", execute: y => parseInt(y) }
+  ]
 };
 
 let outData = JsMapping.mapping(template, data.nodes);

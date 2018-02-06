@@ -37,12 +37,12 @@
     return object;
   }
 
-  function mappingObject(compiles, data) {
+  function mappingObject(compiles, item, array, index) {
     var target = {};
     for (var compile of compiles) {
-      var value = get(data, compile.relateTo, null);
-      if (compile.operate) {
-        value = compile.operate.execute(value, data);
+      var value = get(item, compile.relateTo, null);
+      if (compile.operate && value != null) {
+        value = compile.operate.execute(value, item, array, index);
       }
       target[compile.key] = value;
     }
@@ -55,7 +55,7 @@
       var compile = {
         key: key,
         relateTo: template.mappings[key],
-        operate: template.rules.find(x => x.on === key)
+        operate: (template.rules != null) ? template.rules.find(x => x.on === key) : null
       };
       compiles.push(compile);
     }
@@ -73,11 +73,11 @@
     if (Array.isArray(data)) {
       var target = [];
       for (var i = 0; i < data.length; i++) {
-        target.push(mappingObject(compiles, data[i]));
+        target.push(mappingObject(compiles, data[i], data, i));
       }
       return target;
     }
-    return mappingObject(compiles, data);
+    return mappingObject(compiles, data, data, -1);
   }
 
 
