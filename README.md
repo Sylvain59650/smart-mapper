@@ -35,11 +35,24 @@ const SmartMapper = require('smart-mapper');
 
 Arguments
 
+    entryData: json data to transform
+
     template: json object contain 2 arrays
         mappings: json object that contain in keys the destination, and in values the path in   the specific object to extract
-        rules: json object that contains methods to execute on a particular field during the transformation
+        rules: array that contains methods to execute on a particular field during the transformation.
+        rules is an optional value in the template object.
 
-    entryData: json data to transform
+each rule is composed of the "on" and "execute" properties.
+
+The value of the "on" property is the name of a field in the object mapping.
+
+The value of the "execute" property is a function that can take up to 4 parameters: (value, item, array, index) where:
+
+    value: value extracted from the field value
+    item: the current object in the table
+    array: the entire array
+    index; the position of the current item in the table
+
 
 Returns
 
