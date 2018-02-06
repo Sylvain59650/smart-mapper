@@ -92,9 +92,13 @@ Example 2
       firstname: 'Jean',
       lastname: 'Valjean',
       age: 50,
-      jobs: [{ title: 'arboriste', type: 'first' }, { title: "braconnier", type: "after" }, { title: 'maire', type: 'LATEST' }],
+      jobs: [
+          { title: 'arboriste', type: 'first' },
+          { title: "braconnier", type: "after" }, 
+          { title: 'maire', type: 'LATEST' }],
       friends: ['Cosette', 'Fauchelevent'],
-      address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
+      address: { street: "rue de l'Ouest", zip: '75006', 
+                city: 'Paris', country: { code: 'FR' } }
     }
     },{
     person: {
@@ -102,9 +106,18 @@ Example 2
       firstname: 'Emmanuel',
       lastname: 'Macron',
       age: 40,
-      jobs: [{ title: 'President', type: 'LATEST' }, { title: 'Banquier', type: 'first' }],
-      friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
-      address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
+      jobs: [
+          { title: 'President', type: 'LATEST' },
+          { title: 'Banquier', type: 'first' }],
+      friends: [
+          'Castaner', 
+          'Brigitte', 
+          "Trump", 
+          "Francois", 
+          "Matt"
+        ],
+      address: { street: "Rue de l'Elysée", zip: '59000', 
+                city: 'Paris', country: { code: 'FR' } }
     }
     },{
     person: {
@@ -128,7 +141,13 @@ Example 2
         },
         rules: [
             {
-                 on: "address", execute: address => { if (address != null) return [address.street, address.zip, address.city, address.country.code].join(","); return "inconnue"; } 
+                 on: "address", execute: address => { 
+                     if (address != null) return 
+                        [   address.street, 
+                            address.zip, 
+                            address.city, 
+                            address.country.code
+                        ].join(","); return "inconnue"; } 
             },
             {
                 on: 'job',
@@ -139,7 +158,8 @@ Example 2
                 }
             },
             { 
-                on: "nbFriends", execute: friends => friends.length 
+                on: "nbFriends", 
+                execute: friends => friends.length 
             }
         ]};
 
@@ -160,9 +180,13 @@ Example 2
         firstname: 'Jean',
         lastname: 'Valjean',
         age: 50,
-        jobs: [{ title: 'arboriste', type: 'first' }, { title: "braconnier", type: "after" }, { title: 'maire', type: 'LATEST' }],
+        jobs: [
+            { title: 'arboriste', type: 'first' },
+            { title: "braconnier", type: "after" }, 
+            { title: 'maire', type: 'LATEST' }],
         friends: ['Cosette', 'Fauchelevent'],
-        address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
+        address: { street: "rue de l'Ouest", zip: '75006', 
+                    city: 'Paris', country: { code: 'FR' } }
         }
     },
     {
@@ -171,9 +195,18 @@ Example 2
         firstname: 'Emmanuel',
         lastname: 'Macron',
         age: 40,
-        jobs: [{ title: 'President', type: 'LATEST' }, { title: 'Banquier', type: 'first' }],
-        friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
-        address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
+        jobs: [
+            { title: 'President', type: 'LATEST' },
+            { title: 'Banquier', type: 'first' }],
+        friends: [
+            'Castaner', 
+            'Brigitte', 
+            "Trump", 
+            "Francois", 
+            "Matt"
+        ],
+        address: { street: "Rue de l'Elysée", 
+                zip: '59000', city: 'Paris', country: { code: 'FR' } }
         }
     },
     {
@@ -232,7 +265,14 @@ With the following template
         rules: 
         [
             { 
-                on: "address", execute: address => { if (address != null) return [address.street, address.zip, address.city, address.country.code].join(","); return "inconnue"; } },
+                on: "address", execute: address => { 
+                    if (address != null) return [
+                        address.street, 
+                        address.zip, 
+                        address.city, 
+                        address.country.code
+                        ].join(","); 
+                    return "inconnue"; } },
             {
                 on: 'job',
                 execute: jobs => {
