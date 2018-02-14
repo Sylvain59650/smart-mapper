@@ -1,4 +1,4 @@
-Example 1 : Ultra simple
+# Ultra simple
 
 Given an array of people with name and age properties, we want to get a table with these people but with the FirstName property instead of name and without the age property.
 

@@ -27,6 +27,7 @@ OR
 ## References in browser 
 <code>
 
+    <script src="node_modules/passthrough-object/distrib/passthrough-object.min.js"></script>
   &lt;script src="./node_modules/smart-mapper/distrib/smart-mapper.min.js"&gt;&lt;/script&gt;
 </code>
 
@@ -44,24 +45,24 @@ Arguments
         rules is an optional value in the template object.
         validate: predicate called before insert item, only insert if predicate is true. Optional parameter.
         childrenPropertyName : name of property to map children
-
-each rule is composed of the "on" , "execute"  and postCondition properties.
-
-The value of the "on" property is the name of a field in the object mapping.
-
-The value of the "execute" property is a function that can take up to 4 parameters: (value, item, array, index) where:
+        
+        each rule is composed of the "on" , "execute"  and postCondition properties.
+        
+        The value of the "on" property is the name of a field in the object mapping.
+        
+        The value of the "execute" property is a function that can take up to 4 parameters: (value, item, array, index) where:
 
     value: value extracted from the field value
     item: the current object in the table
     array: the entire array
     index; the position of the current item in the table
-
-the value of the "postCondition" is a function with 1 parameter :(the current transformed key). If the function return false, the transformed key is not insert in the curernt item.
+    
+    the value of the "postCondition" is a function with 1 parameter :(the current transformed key). If the function return false, the transformed key is not insert in the curernt item.
 
 Returns
 
     json data tranformed
 
 
-**Notes** [See examples on GitHub](https://github.com/Sylvain59650/smart-mapper/docs/index.md)
+**Notes** [See examples on GitHub](https://github.com/Sylvain59650/smart-mapper/blob/master/docs/index.md)
 
