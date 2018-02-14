@@ -1,18 +1,21 @@
 /**
  * @license
- * smart-mapper  0.0.9
+ * smart-mapper  0.9.0
  * Copyright Sylvain Longepee
  * Released under MIT license
  */
 
 ;
 (function(moduleName, root, factory) {
-  if (typeof define === 'function' && define.amd) {} else if (typeof exports === 'object') {
-    module.exports = factory();
+  if (typeof define === 'function' && define.amd) {
+    define(["passthrough-object"], factory);
+  } else if (typeof exports === 'object') {
+    var Path = require("passthrough-object");
+    module.exports = factory(Path);
   } else {
-    root.SmartMapper = factory();
+    window.SmartMapper = factory(root.Path);
   }
-}("SmartMapperModule", this, function() {
+}("SmartMapperModule", this, function(Path) {
   'use strict';
 
   var SmartMapper = {};
@@ -21,30 +24,22 @@
     return anything !== null && typeof anything === "object";
   }
 
-  SmartMapper.get = get;
-
-  function get(object, path, defaultValue) {
-    path = path.replace("[", ".").replace("]", "");
-    if (path.startsWith(".")) path = path.substr(1);
-    var ps = path.split(".");
-    let i = 0;
-    const length = ps.length;
-    while (object != null && i < length) {
-      object = object[ps[i]];
-      i++;
-    }
-    if (object == null) return defaultValue;
-    return object;
-  }
-
   function mappingObject(compiles, item, array, index) {
     var target = {};
     for (var compile of compiles) {
-      var value = get(item, compile.relateTo, null);
+      var value = Path.get(item, compile.relateTo, null);
       if (compile.operate && value != null) {
         value = compile.operate.execute(value, item, array, index);
       }
-      target[compile.key] = value;
+      if (value != null) {
+        if (compile.operate && compile.operate.postCondition) {
+          if (compile.operate.postCondition(value) === true) {
+            target[compile.key] = value;
+          }
+        } else {
+          target[compile.key] = value;
+        }
+      }
     }
     return target;
   }
@@ -69,11 +64,23 @@
    * @param {json} - data : data to transform
    */
   SmartMapper.mapping = function(template, data) {
+    var validate = template.validate || function(x) { return true };
+    var childrenPropertyName = template.childrenPropertyName || "childs";
     var compiles = compile(template);
     if (Array.isArray(data)) {
       var target = [];
       for (var i = 0; i < data.length; i++) {
-        target.push(mappingObject(compiles, data[i], data, i));
+        var m = mappingObject(compiles, data[i], data, i);
+        if (template.childrens) {
+          var childrens = template.childrens(m);
+          if (childrens) {
+            m[childrenPropertyName] = SmartMapper.mapping(template, childrens);
+          }
+        }
+
+        if (m != null && validate(m)) {
+          target.push(m);
+        }
       }
       return target;
     }

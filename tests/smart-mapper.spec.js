@@ -1,5 +1,7 @@
 const JsMapping = require('../sources/smart-mapper');
 
+var rejecteds = [];
+
 let template = {
   mappings: {
     id: "person.id",
@@ -18,10 +20,12 @@ let template = {
         var latest = jobs.find(x => x.type === 'LATEST');
         if (latest != null) return latest.title;
         return "inconnu";
-      }
+      },
+      postCondition: x => x != "inconnu"
     },
     { on: "nbFriends", execute: friends => friends.length }
-  ]
+  ],
+  validate: item => { if (item.address === undefined) { rejecteds.push(item); return false } return true }
 };
 
 
@@ -61,4 +65,6 @@ let entryData = [{
 
 
 let outData = JsMapping.mapping(template, entryData);
-console.log(outData);
+console.log("outData", outData);
+console.log("");
+console.log("rejecteds", rejecteds);

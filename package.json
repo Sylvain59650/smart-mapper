@@ -3,14 +3,19 @@
   "license": "MIT",
   "groupId": "slongepee",
   "artifactId": "smart-mapper",
-  "version": "0.0.9",
-  "main": "tests/smart-mapper.spec.js",
+  "version": "0.9.0",
+  "main": "distrib/smart-mapper.min.js",
   "name": "smart-mapper",
   "description": "A tool to mapping data in another format",
   "scripts": {
     "eslint": "eslint --fix './*.js'"
   },
-  "dependencies": {},
+  "keywords": [
+    "map", "mapping", "transform", "map data"
+  ],
+  "dependencies": {
+    "passthrough-object": "^0.9.0"
+  },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-plugin-remove-comments": "^2.0.0",
