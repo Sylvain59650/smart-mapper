@@ -4,3 +4,6 @@ tests/
 sources/
 .vscode
 gulpfile.js
+.eslintrc.json
+.gitignore
+.vscode/
