@@ -1,5 +1,16 @@
 # Smart Mapper
 
+<div style="display:inline">
+
+[![build](https://travis-ci.org/Sylvain59650/smart-mapper.png?branch=master)](https://travis-ci.org/Sylvain59650/smart-mapper)
+![version](https://img.shields.io/npm/v/smart-mapper.svg)
+![package](https://img.shields.io/github/package-json/v/Sylvain59650/smart-mapper.svg)
+![dependencies](https://img.shields.io/david/Sylvain59650/smart-mapper.svg)
+![minified](https://img.shields.io/bundlephobia/min/smart-mapper.svg)
+![license](https://img.shields.io/npm/l/smart-mapper.svg)
+[![hits](http://hits.dwyl.com/Sylvain59650/smart-mapper.svg)](http://hits.dwyl.com/Sylvain59650/smart-mapper)
+</div>
+
 Smart Mapper is useful when you want transform data that you have received.
 
 

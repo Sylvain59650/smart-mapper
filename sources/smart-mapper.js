@@ -7,37 +7,37 @@
 
 ;
 (function(moduleName, root, factory) {
-  if (typeof define === 'function' && define.amd) {
+  if (typeof define === "function" && define.amd) {
     define(["passthrough-object"], factory);
-  } else if (typeof exports === 'object') {
+  } else if (typeof exports === "object") {
     var Path = require("passthrough-object");
     module.exports = factory(Path);
   } else {
     window.SmartMapper = factory(root.Path);
   }
-}("SmartMapperModule", this, function(Path) {
-  'use strict';
+}("SmartMapperModule", null, function(Path) {
+  "use strict";
 
   var SmartMapper = {};
 
-  function isObject(anything) {
-    return anything !== null && typeof anything === "object";
+  function isDef(obj) {
+    return (obj !== null && typeof obj !== "undefined");
   }
 
   function mappingObject(compiles, item, array, index) {
     var target = {};
-    for (var compile of compiles) {
-      var value = Path.get(item, compile.relateTo, null);
-      if (compile.operate && value != null) {
-        value = compile.operate.execute(value, item, array, index);
+    for (var c of compiles) {
+      var value = Path.get(item, c.relateTo, null);
+      if (c.operate && value !== null) {
+        value = c.operate.execute(value, item, array, index);
       }
-      if (value != null) {
-        if (compile.operate && compile.operate.postCondition) {
-          if (compile.operate.postCondition(value) === true) {
-            target[compile.key] = value;
+      if (value !== null) {
+        if (c.operate && c.operate.postCondition) {
+          if (c.operate.postCondition(value) === true) {
+            target[c.key] = value;
           }
         } else {
-          target[compile.key] = value;
+          target[c.key] = value;
         }
       }
     }
@@ -47,24 +47,25 @@
   function compile(template) {
     var compiles = [];
     for (var key in template.mappings) {
-      var compile = {
+      let c = {
         key: key,
         relateTo: template.mappings[key],
-        operate: (template.rules != null) ? template.rules.find(x => x.on === key) : null
+        operate: isDef(template.rules) ? template.rules.find(x => x.on === key) : null
       };
-      compiles.push(compile);
+      compiles.push(c);
     }
     return compiles;
   }
 
   /*
    * @param {json} - template:json object that contain 2 arrays:
-   *                        mappings: json object that contain in keys the destination, and in values the path in the specific object to extract
+   *                        mappings: json object that contain in keys the destination, 
+   *                                  and in values the path in the specific object to extract
    *                        rules: json object that contains methods to execute on a particular field during the transformation
    * @param {json} - data : data to transform
    */
   SmartMapper.mapping = function(template, data) {
-    var validate = template.validate || function(x) { return true };
+    var validate = template.validate || function() { return true };
     var childrenPropertyName = template.childrenPropertyName || "childs";
     var compiles = compile(template);
     if (Array.isArray(data)) {
@@ -78,7 +79,7 @@
           }
         }
 
-        if (m != null && validate(m)) {
+        if (m !== null && validate(m)) {
           target.push(m);
         }
       }
