@@ -1,70 +1,77 @@
-const JsMapping = require('../sources/smart-mapper');
+import { mapping } from "../sources/smart-mapper";
 
 var rejecteds = [];
+
+function isDef(value) { return value !== null && typeof value !== "undefined"; }
 
 let template = {
   mappings: {
     id: "person.id",
-    lastname: 'person.lastname',
-    firstname: 'person.firstname',
-    age: 'person.age',
-    job: 'person.jobs',
-    nbFriends: 'person.friends',
+    lastname: "person.lastname",
+    firstname: "person.firstname",
+    age: "person.age",
+    job: "person.jobs",
+    nbFriends: "person.friends",
     address: "person.address"
   },
-  rules: [
-    { on: "address", execute: address => { if (address != null) return [address.street, address.zip, address.city, address.country.code].join(","); return "inconnue"; } },
+  rules: [{
+      on: "address",
+      execute: address => {
+        if (!isDef(address)) { return [address.street, address.zip, address.city, address.country.code].join(","); }
+        return "inconnue";
+      }
+    },
     {
-      on: 'job',
+      on: "job",
       execute: jobs => {
-        var latest = jobs.find(x => x.type === 'LATEST');
-        if (latest != null) return latest.title;
+        var latest = jobs.find(x => x.type === "LATEST");
+        if (!isDef(latest)) { return latest.title; }
         return "inconnu";
       },
-      postCondition: x => x != "inconnu"
+      postCondition: x => x !== "inconnu"
     },
     { on: "nbFriends", execute: friends => friends.length }
   ],
-  validate: item => { if (item.address === undefined) { rejecteds.push(item); return false } return true }
+  validate: item => { if (!isDef(item.address)) { rejecteds.push(item); return false } return true }
 };
 
 
 let entryData = [{
     person: {
-      id: '1',
-      firstname: 'Jean',
-      lastname: 'Valjean',
+      id: "1",
+      firstname: "Jean",
+      lastname: "Valjean",
       age: 50,
-      jobs: [{ title: 'arboriste', type: 'first' }, { title: "braconnier", type: "after" }, { title: 'maire', type: 'LATEST' }],
-      friends: ['Cosette', 'Fauchelevent'],
-      address: { street: "rue de l'Ouest", zip: '75006', city: 'Paris', country: { code: 'FR' } }
+      jobs: [{ title: "arboriste", type: "first" }, { title: "braconnier", type: "after" }, { title: "maire", type: "LATEST" }],
+      friends: ["Cosette", "Fauchelevent"],
+      address: { street: "rue de l'Ouest", zip: "75006", city: "Paris", country: { code: "FR" } }
     }
   },
   {
     person: {
-      id: '2',
-      firstname: 'Emmanuel',
-      lastname: 'Macron',
+      id: "2",
+      firstname: "Emmanuel",
+      lastname: "Macron",
       age: 40,
-      jobs: [{ title: 'President', type: 'LATEST' }, { title: 'Banquier', type: 'first' }],
-      friends: ['Castaner', 'Brigitte', "Trump", "Francois", "Matt"],
-      address: { street: "Rue de l'Elysée", zip: '59000', city: 'Paris', country: { code: 'FR' } }
+      jobs: [{ title: "President", type: "LATEST" }, { title: "Banquier", type: "first" }],
+      friends: ["Castaner", "Brigitte", "Trump", "Francois", "Matt"],
+      address: { street: "Rue de l'Elysée", zip: "59000", city: "Paris", country: { code: "FR" } }
     }
   },
   {
     person: {
-      id: '3',
-      firstname: 'Mario',
-      lastname: '',
+      id: "3",
+      firstname: "Mario",
+      lastname: "",
       age: 35,
-      jobs: [{ title: 'Plombier', type: 'first' }],
+      jobs: [{ title: "Plombier", type: "first" }],
       friends: ["Luigi", "Sonic"]
     }
   }
 ];
 
 
-let outData = JsMapping.mapping(template, entryData);
+let outData = mapping(template, entryData);
 console.log("outData", outData);
 console.log("");
 console.log("rejecteds", rejecteds);

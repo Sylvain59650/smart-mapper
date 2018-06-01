@@ -1,0 +1,93 @@
+<html>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+  <script src="modules/smart-mapper/distrib/smart-mapper.min.js"></script>
+</head>
+
+<body>
+  <div class="breadcrumb">
+    <a href="https://www.npmjs.com/package/smart-mapper" title="NPM">
+      <img src="https://sylvain59650.github.io/smart-mapper/img/npm.png" height="32"></a>
+    <a href="https://github.com/Sylvain59650/smart-mapper" title="GitHub"><img src="https://github.com/favicon.ico" height="32" /></a>
+  </div>
+
+  <script src="htmlElement.min.js"></script>
+
+  <div id="el" style="position:relative;top:100px;left:50px;border:solid 2px red;width:300px;height:250px">&nbsp;</div>
+
+  <div id="mainCircle" style="background-color:black;width:96px;height:96px;border-radius:50px;position:absolute;left:350px;top:500px"></div>
+
+  <script>
+    var circlesInfo = [{
+      pos: "left-top",
+      color: "orangered"
+    }, {
+      pos: "top-left",
+      color: "blue"
+    }, {
+      pos: "left",
+      color: "yellow"
+    }, {
+      pos: "left-bottom",
+      color: "red"
+    }, {
+      pos: "bottom-left",
+      color: "gray"
+    }, {
+      pos: "bottom",
+      color: "green"
+    }, {
+      pos: "right-bottom",
+      color: "black"
+    }, {
+      pos: "bottom-right",
+      color: "marroon"
+    }, {
+      pos: "right",
+      color: "orange"
+    }, {
+      pos: "right-top",
+      color: "cyan"
+    }, {
+      pos: "top-right",
+      color: "fuchsia"
+    }, {
+      pos: "top",
+      color: "olive"
+    }];
+    var circles = [];
+
+    for (var i = 0; i < circlesInfo.length; i++) {
+      var ci = circlesInfo[i];
+      var c = newElement("div", {
+        id: "i" + i,
+        style: "background-color:" + ci.color + ";width:16px;height:16px;border-radius:12px",
+        title: ci.pos,
+        "z-index": 99
+      });
+      document.body.beforeEnd(c);
+      circles.push(c);
+
+      var attach = smart - mapper.getAttach(el, ci.pos);
+      smart - mapper.setPosition(c, attach);
+    }
+
+
+    var main = qsi("mainCircle");
+    var attachMain = smart - mapper.getAttach(main, "center");
+
+    var paper = Raphael(0, 0, 640, 780);
+
+    for (var i = 0; i < circles.length; i++) {
+      var c = circles[i];
+      var attach = smart - mapper.getAttach(c, "center");
+      var pathString = "M" + attachMain.left + "," + attachMain.top + " L" + attach.left + "," + attach.top;
+      var line = paper.path(pathString);
+      line.attr("stroke-width", "2");
+      line.attr("stroke", circlesInfo[i].color);
+    }
+  </script>
+</body>
+
+</html>

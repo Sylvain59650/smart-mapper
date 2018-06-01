@@ -1,10 +1,3 @@
-/**
- * @license
- * smart-mapper  0.9.0
- * Copyright Sylvain Longepee
- * Released under MIT license
- */
-
 ;
 (function(moduleName, root, factory) {
   if (typeof define === "function" && define.amd) {
