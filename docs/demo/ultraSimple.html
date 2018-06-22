@@ -1,92 +1,81 @@
 <html>
 
 <head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+  <script src="../3parts/htmlElement.min.js"></script>
+  <script src="../3parts/htmlElement-events.min.js"></script>
+  <link href="https://sylvain59650.github.io/demonstrator/css/demo.css" type="text/css" rel="stylesheet" />
+  <link href="https://sylvain59650.github.io/demonstrator/css/style.css" type="text/css" rel="stylesheet" />
+
+  <script src="../3parts/passthrough-object.min.js"></script>
   <script src="modules/smart-mapper/distrib/smart-mapper.min.js"></script>
 </head>
 
 <body>
+  <style>
+    #response {
+      border: solid 2px gray;
+      min-width: 100%;
+      min-height: 100px;
+    }
+  </style>
   <div class="breadcrumb">
     <a href="https://www.npmjs.com/package/smart-mapper" title="NPM">
       <img src="https://sylvain59650.github.io/smart-mapper/img/npm.png" height="32"></a>
     <a href="https://github.com/Sylvain59650/smart-mapper" title="GitHub"><img src="https://github.com/favicon.ico" height="32" /></a>
   </div>
 
-  <script src="htmlElement.min.js"></script>
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &gt;
+    <h2>Ultra simple</h2>
+  </div>
+  <p>
+    Given an array of people with name and age properties, we want to get a table with these people but with the FirstName property instead of name and without the age property.
+  </p>
 
-  <div id="el" style="position:relative;top:100px;left:50px;border:solid 2px red;width:300px;height:250px">&nbsp;</div>
+  <code>const SmartMapper = require('smart-mapper');  </code>
+  <pre>
+  <xmp id="codeToInsert">
+  </xmp>
+</pre>
 
-  <div id="mainCircle" style="background-color:black;width:96px;height:96px;border-radius:50px;position:absolute;left:350px;top:500px"></div>
+  <button id="btnTest">Test</button>
+
+  <div id="response" class="code">
+
+  </div>
+  <script id="code">
+    var persons = [{
+      name: 'Matt',
+      age: 30
+    }, {
+      name: 'Edouard',
+      age: 28
+    }, {
+      name: 'Guillaume',
+      age: 29
+    }, {
+      name: 'Roger',
+      age: 51
+    }];
+
+
+    var template = {
+      mappings: {
+        FirstName: 'name'
+      }
+    };
+
+
+    let outData = SmartMapper.mapping(template, persons);
+  </script>
 
   <script>
-    var circlesInfo = [{
-      pos: "left-top",
-      color: "orangered"
-    }, {
-      pos: "top-left",
-      color: "blue"
-    }, {
-      pos: "left",
-      color: "yellow"
-    }, {
-      pos: "left-bottom",
-      color: "red"
-    }, {
-      pos: "bottom-left",
-      color: "gray"
-    }, {
-      pos: "bottom",
-      color: "green"
-    }, {
-      pos: "right-bottom",
-      color: "black"
-    }, {
-      pos: "bottom-right",
-      color: "marroon"
-    }, {
-      pos: "right",
-      color: "orange"
-    }, {
-      pos: "right-top",
-      color: "cyan"
-    }, {
-      pos: "top-right",
-      color: "fuchsia"
-    }, {
-      pos: "top",
-      color: "olive"
-    }];
-    var circles = [];
-
-    for (var i = 0; i < circlesInfo.length; i++) {
-      var ci = circlesInfo[i];
-      var c = newElement("div", {
-        id: "i" + i,
-        style: "background-color:" + ci.color + ";width:16px;height:16px;border-radius:12px",
-        title: ci.pos,
-        "z-index": 99
-      });
-      document.body.beforeEnd(c);
-      circles.push(c);
-
-      var attach = smart - mapper.getAttach(el, ci.pos);
-      smart - mapper.setPosition(c, attach);
-    }
-
-
-    var main = qsi("mainCircle");
-    var attachMain = smart - mapper.getAttach(main, "center");
-
-    var paper = Raphael(0, 0, 640, 780);
-
-    for (var i = 0; i < circles.length; i++) {
-      var c = circles[i];
-      var attach = smart - mapper.getAttach(c, "center");
-      var pathString = "M" + attachMain.left + "," + attachMain.top + " L" + attach.left + "," + attach.top;
-      var line = paper.path(pathString);
-      line.attr("stroke-width", "2");
-      line.attr("stroke", circlesInfo[i].color);
-    }
+    var code = qsi("code").text;
+    qsi("codeToInsert").html(code);
+    qsi("btnTest").on("click", function() {
+      var response = qsi("response");
+      response.html(JSON.stringify(outData).replace(/}/g, "}\n"));
+    });
   </script>
 </body>
 

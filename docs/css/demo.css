@@ -34,3 +34,13 @@ h1.breadcrumb {
   font-weight: 900;
   display: inline;
 }
+
+xmp,
+.code {
+  background-color: #eeeeee;
+  border: solid 1px gray;
+  display: block;
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
+}

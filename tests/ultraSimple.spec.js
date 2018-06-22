@@ -1,12 +1,12 @@
-const SmartMapper = require('../sources/smart-mapper');
+const SmartMapper = require("../distrib/smart-mapper.min.js");
 
 var persons = [
-  { name: 'Matt', age: 30 },
-  { name: 'Edouard', age: 28 },
-  { name: 'Guillaume', age: 29 },
-  { name: 'Roger', age: 51 }
+  { name: "Matt", age: 30 },
+  { name: "Edouard", age: 28 },
+  { name: "Guillaume", age: 29 },
+  { name: "Roger", age: 51 }
 ];
-var template = { mappings: { FirstName: 'name' } };
+var template = { mappings: { FirstName: "name" } };
 
 let outData = SmartMapper.mapping(template, persons);
-console.log(outData);
+console.log(JSON.stringify(outData));

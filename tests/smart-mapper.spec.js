@@ -1,4 +1,5 @@
-import { mapping } from "../sources/smart-mapper";
+require("passthrough-object");
+var SmartMapper = require("../distrib/smart-mapper.min.js");
 
 var rejecteds = [];
 
@@ -17,7 +18,7 @@ let template = {
   rules: [{
       on: "address",
       execute: address => {
-        if (!isDef(address)) { return [address.street, address.zip, address.city, address.country.code].join(","); }
+        if (isDef(address)) { return [address.street, address.zip, address.city, address.country.code].join(","); }
         return "inconnue";
       }
     },
@@ -25,14 +26,14 @@ let template = {
       on: "job",
       execute: jobs => {
         var latest = jobs.find(x => x.type === "LATEST");
-        if (!isDef(latest)) { return latest.title; }
+        if (isDef(latest)) { return latest.title; }
         return "inconnu";
       },
       postCondition: x => x !== "inconnu"
     },
     { on: "nbFriends", execute: friends => friends.length }
   ],
-  validate: item => { if (!isDef(item.address)) { rejecteds.push(item); return false } return true }
+  validate: item => { if (isDef(item.address)) { rejecteds.push(item); return false } return true }
 };
 
 
@@ -70,8 +71,7 @@ let entryData = [{
   }
 ];
 
-
-let outData = mapping(template, entryData);
-console.log("outData", outData);
+let outData = SmartMapper.mapping(template, entryData);
+console.log("outData", JSON.stringify(outData));
 console.log("");
-console.log("rejecteds", rejecteds);
+console.log("rejecteds", JSON.stringify(rejecteds));
