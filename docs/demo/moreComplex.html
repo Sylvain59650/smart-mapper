@@ -1,0 +1,177 @@
+<html>
+
+<head>
+  <title>smart-mapper</title>
+  <link href="https://sylvain59650.github.io/demonstrator/css/demo.css" type="text/css" rel="stylesheet" />
+  <link href="https://sylvain59650.github.io/demonstrator/css/style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+  <style>
+    table {
+      border: solid 1px gray;
+      border-collapse: collapse;
+    }
+    
+    hr {
+      border: solid 2px gray;
+    }
+    
+    #response {
+      border: solid 2px gray;
+      min-width: 100%;
+      min-height: 100px;
+    }
+  </style>
+  <div class="breadcrumb">
+    <a href="https://www.npmjs.com/package/smart-mapper" title="NPM">
+      <img src="https://sylvain59650.github.io/smart-mapper/img/npm.png" height="32"></a>
+    <a href="https://github.com/Sylvain59650/smart-mapper" title="GitHub"><img src="https://github.com/favicon.ico" height="32" /></a>
+  </div>
+
+  <div style="display:inline">
+    <a target="_blank" title="build" href="https://travis-ci.org/Sylvain59650/smart-mapper"><img src="https://travis-ci.org/Sylvain59650/smart-mapper.png?branch=master" /></a>
+    <a target="_blank" title="version" href="https://www.npmjs.com/package/smart-mapper"><img src="https://img.shields.io/npm/v/smart-mapper.svg" /></a>
+    <a target="_blank" title="package" href="https://github.com/Sylvain59650/smart-mapper"><img src="https://img.shields.io/github/package-json/v/Sylvain59650/smart-mapper.svg" /></a>
+    <a target="_blank" title="dependencies" href="https://david-dm.org/Sylvain59650/smart-mapper"><img src="https://img.shields.io/david/Sylvain59650/smart-mapper.svg" /></a>
+    <a target="_blank" title="dependencies graph" href="http://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
+    <img src="https://img.shields.io/bundlephobia/min/smart-mapper.svg" />
+    <img src="https://img.shields.io/badge/eslint-ok-blue.svg" />
+    <a target="_blank" title="tests" href="https://sylvain59650.github.io/smart-mapper/"><img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" /></a>
+    <a target="_blank" title="downloads" href="https://www.jsdelivr.com/package/npm/smart-mapper"><img src="https://data.jsdelivr.com/v1/package/npm/smart-mapper/badge" /></a>
+    <a target="_blank" title="cdn" href="https://cdn.jsdelivr.net/npm/smart-mapper/distrib/smart-mapper.min.js"><img src="https://img.shields.io/badge/cdn-jsdeliv-black.svg" /></a>
+    <img src="https://img.shields.io/npm/l/smart-mapper.svg" />
+    <img src="https://hits.dwyl.com/Sylvain59650/smart-mapper.svg" />
+  </div>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &gt;
+    <h2>A bit more complex</h2>
+  </div>
+
+
+  <table border="1" style="min-width:1280px">
+    <tr>
+      <td>before (entryData)</td>
+      <td>template</td>
+      <td>after (outdata)</td>
+    </tr>
+    <tr>
+      <td>
+        <pre><xmp>
+    [{
+        person: {
+        id: "1",
+        firstname: "Jean",
+        lastname: "Valjean",
+        age: 50,
+        jobs: [
+            { title: "arboriste", type: "first" },
+            { title: "braconnier", type: "after" }, 
+            { title: "maire", type: "LATEST" }],
+        friends: ["Cosette", "Fauchelevent"],
+        address: { street: "rue de l"Ouest", zip: "75006", 
+                    city: "Paris", country: { code: "FR" } }
+        }
+    },
+    {
+        person: {
+        id: "2",
+        firstname: "Emmanuel",
+        lastname: "Macron",
+        age: 40,
+        jobs: [
+            { title: "President", type: "LATEST" },
+            { title: "Banquier", type: "first" }],
+        friends: [
+            "Castaner", 
+            "Brigitte", 
+            "Trump", 
+            "Francois", 
+            "Matt"
+        ],
+        address: { street: "Rue de l"Elysée", 
+                zip: "59000", city: "Paris", country: { code: "FR" } }
+        }
+    },
+    {
+        person: {
+        id: "3",
+        firstname: "Mario",
+        lastname: "",
+        age: 35,
+        jobs: [{ title: "Plombier", type: "first" }],
+        friends: ["Luigi", "Sonic"]
+        }
+    }
+    ]
+</xmp></pre>
+      </td>
+      <td><pre>
+        {
+            mappings: {
+                id: "person.id",
+                lastname: "person.lastname",
+                firstname: "person.firstname",
+                age: "person.age",
+                job: "person.jobs",
+                nbFriends: "person.friends",
+                address: "person.address"
+            },
+            rules: 
+            [
+                { 
+                    on: "address", execute: address => { 
+                        if (address != null) return [
+                            address.street, 
+                            address.zip, 
+                            address.city, 
+                            address.country.code
+                            ].join(","); 
+                        return "inconnue"; } },
+                {
+                    on: "job",
+                    execute: jobs => {
+                        var latest = jobs.find(x => x.type === "LATEST");
+                        if (latest != null) return latest.title;
+                        return "inconnu";
+                    }
+                },
+                { 
+                    on: "nbFriends", execute: friends => friends.length
+                }
+            ]
+        }</pre>
+        <hr/>
+        <p class="code"> let outData = SmartMapper.mapping(template, entryData);</p>
+      </td>
+      <td>
+        <pre>
+    [ { id: "1",
+        lastname: "Valjean",
+        firstname: "Jean",
+        age: 50,
+        job: "maire",
+        nbFriends: 2,
+        address: "rue de l\"Ouest,75006,Paris,FR" },
+    { id: "2",
+        lastname: "Macron",
+        firstname: "Emmanuel",
+        age: 40,
+        job: "President",
+        nbFriends: 5,
+        address: "Rue de l\"Elysée,59000,Paris,FR" },
+    { id: "3",
+        lastname: null,
+        firstname: "Mario",
+        age: 35,
+        job: "inconnu",
+        nbFriends: 2,
+        address: "inconnue" } ]
+</pre>
+      </td>
+    </tr>
+  </table>
+</body>
+
+</html>
