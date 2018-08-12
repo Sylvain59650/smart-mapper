@@ -12,10 +12,29 @@
 
 <body>
   <style>
+    td.top {
+      vertical-align: top;
+      border: solid 1px gray;
+      max-width: 450px;
+      overflow-x: scroll;
+    }
+    
     #response {
       border: solid 2px gray;
       min-width: 100%;
       min-height: 100px;
+    }
+    
+    #btnTest {
+      background-color: green;
+      font-weight: bolder;
+      color: white;
+      border: solid 3px;
+      border-radius: 10px 10px 10px 10px;
+      padding: 3px;
+      min-width: 80px;
+      min-height: 40px;
+      cursor: pointer;
     }
   </style>
   <div class="breadcrumb">
@@ -29,7 +48,7 @@
     <a target="_blank" title="version" href="https://www.npmjs.com/package/smart-mapper"><img src="https://img.shields.io/npm/v/smart-mapper.svg" /></a>
     <a target="_blank" title="package" href="https://github.com/Sylvain59650/smart-mapper"><img src="https://img.shields.io/github/package-json/v/Sylvain59650/smart-mapper.svg" /></a>
     <a target="_blank" title="dependencies" href="https://david-dm.org/Sylvain59650/smart-mapper"><img src="https://img.shields.io/david/Sylvain59650/smart-mapper.svg" /></a>
-    <a target="_blank" title="dependencies graph" href="http://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
+    <a target="_blank" title="dependencies graph" href="https://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
     <img src="https://img.shields.io/bundlephobia/min/smart-mapper.svg" />
     <img src="https://img.shields.io/badge/eslint-ok-blue.svg" />
     <a target="_blank" title="tests" href="https://sylvain59650.github.io/smart-mapper/"><img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" /></a>
@@ -49,7 +68,7 @@
 
   <code>const SmartMapper = require('smart-mapper');  </code>
   <pre>
-  <xmp id="codeToInsert">
+  <xmp id="codeToInsert" contenteditable="true">
   </xmp>
 </pre>
 

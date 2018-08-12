@@ -20,7 +20,7 @@ gulp.task("smart-mapper.min.js", ["vendor"], () => {
     .pipe(concat("smart-mapper.min.js"))
     .pipe(babel({
       presets: ["es2015"],
-      compact: false,
+      compact: true,
       comments: false
     }))
 

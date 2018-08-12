@@ -2,8 +2,13 @@
 
 <head>
   <title>smart-mapper</title>
+  <script src="../3parts/htmlElement.min.js"></script>
+  <script src="../3parts/htmlElement-events.min.js"></script>
   <link href="https://sylvain59650.github.io/demonstrator/css/demo.css" type="text/css" rel="stylesheet" />
   <link href="https://sylvain59650.github.io/demonstrator/css/style.css" type="text/css" rel="stylesheet" />
+
+  <script src="../3parts/passthrough-object.min.js"></script>
+  <script src="modules/smart-mapper/distrib/smart-mapper.min.js"></script>
 </head>
 
 <body>
@@ -17,10 +22,38 @@
       border: solid 2px gray;
     }
     
+    td.top {
+      vertical-align: top;
+      border: solid 1px gray;
+      max-width: 450px;
+      overflow-x: scroll;
+    }
+    
+    .note {
+      padding: 3px;
+      margin: 3px;
+      background-color: royalblue;
+      color: white;
+      font-weight: bolder;
+      border: solid 1px blue;
+    }
+    
     #response {
       border: solid 2px gray;
       min-width: 100%;
       min-height: 100px;
+    }
+    
+    #btnTest {
+      background-color: green;
+      font-weight: bolder;
+      color: white;
+      border: solid 3px;
+      border-radius: 10px 10px 10px 10px;
+      padding: 3px;
+      min-width: 80px;
+      min-height: 40px;
+      cursor: pointer;
     }
   </style>
   <div class="breadcrumb">
@@ -34,7 +67,7 @@
     <a target="_blank" title="version" href="https://www.npmjs.com/package/smart-mapper"><img src="https://img.shields.io/npm/v/smart-mapper.svg" /></a>
     <a target="_blank" title="package" href="https://github.com/Sylvain59650/smart-mapper"><img src="https://img.shields.io/github/package-json/v/Sylvain59650/smart-mapper.svg" /></a>
     <a target="_blank" title="dependencies" href="https://david-dm.org/Sylvain59650/smart-mapper"><img src="https://img.shields.io/david/Sylvain59650/smart-mapper.svg" /></a>
-    <a target="_blank" title="dependencies graph" href="http://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
+    <a target="_blank" title="dependencies graph" href="https://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
     <img src="https://img.shields.io/bundlephobia/min/smart-mapper.svg" />
     <img src="https://img.shields.io/badge/eslint-ok-blue.svg" />
     <a target="_blank" title="tests" href="https://sylvain59650.github.io/smart-mapper/"><img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" /></a>
@@ -49,7 +82,7 @@
     <h2>A bit more complex</h2>
   </div>
 
-
+  <p class="note">You can edit entryData & template before click on test button</p>
   <table border="1" style="min-width:1280px">
     <tr>
       <td>before (entryData)</td>
@@ -57,121 +90,148 @@
       <td>after (outdata)</td>
     </tr>
     <tr>
-      <td>
-        <pre><xmp>
-    [{
-        person: {
-        id: "1",
-        firstname: "Jean",
-        lastname: "Valjean",
-        age: 50,
-        jobs: [
-            { title: "arboriste", type: "first" },
-            { title: "braconnier", type: "after" }, 
-            { title: "maire", type: "LATEST" }],
-        friends: ["Cosette", "Fauchelevent"],
-        address: { street: "rue de l"Ouest", zip: "75006", 
-                    city: "Paris", country: { code: "FR" } }
-        }
-    },
-    {
-        person: {
-        id: "2",
-        firstname: "Emmanuel",
-        lastname: "Macron",
-        age: 40,
-        jobs: [
-            { title: "President", type: "LATEST" },
-            { title: "Banquier", type: "first" }],
-        friends: [
-            "Castaner", 
-            "Brigitte", 
-            "Trump", 
-            "Francois", 
-            "Matt"
-        ],
-        address: { street: "Rue de l"Elysée", 
-                zip: "59000", city: "Paris", country: { code: "FR" } }
-        }
-    },
-    {
-        person: {
-        id: "3",
-        firstname: "Mario",
-        lastname: "",
-        age: 35,
-        jobs: [{ title: "Plombier", type: "first" }],
-        friends: ["Luigi", "Sonic"]
-        }
-    }
-    ]
+      <td class="top">
+        <pre><xmp id="codeToInsert" contenteditable="true">
+    
 </xmp></pre>
       </td>
-      <td><pre>
-        {
-            mappings: {
-                id: "person.id",
-                lastname: "person.lastname",
-                firstname: "person.firstname",
-                age: "person.age",
-                job: "person.jobs",
-                nbFriends: "person.friends",
-                address: "person.address"
-            },
-            rules: 
-            [
-                { 
-                    on: "address", execute: address => { 
-                        if (address != null) return [
-                            address.street, 
-                            address.zip, 
-                            address.city, 
-                            address.country.code
-                            ].join(","); 
-                        return "inconnue"; } },
-                {
-                    on: "job",
-                    execute: jobs => {
-                        var latest = jobs.find(x => x.type === "LATEST");
-                        if (latest != null) return latest.title;
-                        return "inconnu";
-                    }
-                },
-                { 
-                    on: "nbFriends", execute: friends => friends.length
-                }
-            ]
-        }</pre>
+      <td class="top"><pre>
+          <xmp id="templateToInsert" contenteditable="true"></xmp>
+       </pre>
         <hr/>
         <p class="code"> let outData = SmartMapper.mapping(template, entryData);</p>
+        <button id="btnTest">Test</button>
+
       </td>
-      <td>
-        <pre>
-    [ { id: "1",
-        lastname: "Valjean",
-        firstname: "Jean",
-        age: 50,
-        job: "maire",
-        nbFriends: 2,
-        address: "rue de l\"Ouest,75006,Paris,FR" },
-    { id: "2",
-        lastname: "Macron",
-        firstname: "Emmanuel",
-        age: 40,
-        job: "President",
-        nbFriends: 5,
-        address: "Rue de l\"Elysée,59000,Paris,FR" },
-    { id: "3",
-        lastname: null,
-        firstname: "Mario",
-        age: 35,
-        job: "inconnu",
-        nbFriends: 2,
-        address: "inconnue" } ]
+      <td class="top">
+        <pre id="response" class="code">
+    
 </pre>
       </td>
     </tr>
   </table>
+
+  <script id="code">
+    var entryData = [{
+      person: {
+        id: "1",
+        firstname: "Jean",
+        lastname: "Valjean",
+        age: 50,
+        jobs: [{
+          title: "arboriste",
+          type: "first"
+        }, {
+          title: "braconnier",
+          type: "after"
+        }, {
+          title: "maire",
+          type: "LATEST"
+        }],
+        friends: ["Cosette", "Fauchelevent"],
+        address: {
+          street: "rue de l'Ouest",
+          zip: "75006",
+          city: "Paris",
+          country: {
+            code: "FR"
+          }
+        }
+      }
+    }, {
+      person: {
+        id: "2",
+        firstname: "Emmanuel",
+        lastname: "Macron",
+        age: 40,
+        jobs: [{
+          title: "President",
+          type: "LATEST"
+        }, {
+          title: "Banquier",
+          type: "first"
+        }],
+        friends: [
+          "Castaner",
+          "Brigitte",
+          "Trump",
+          "Francois",
+          "Matt"
+        ],
+        address: {
+          street: "Rue de l'Elysée",
+          zip: "59000",
+          city: "Paris",
+          country: {
+            code: "FR"
+          }
+        }
+      }
+    }, {
+      person: {
+        id: "3",
+        firstname: "Mario",
+        lastname: "",
+        age: 35,
+        jobs: [{
+          title: "Plombier",
+          type: "first"
+        }],
+        friends: ["Luigi", "Sonic"]
+      }
+    }]
+  </script>
+
+  <script id="template">
+    var template = {
+      mappings: {
+        id: "person.id",
+        lastname: "person.lastname",
+        firstname: "person.firstname",
+        age: "person.age",
+        job: "person.jobs",
+        nbFriends: "person.friends",
+        address: "person.address"
+      },
+      rules: [{
+        on: "address",
+        execute: address => {
+          if (address != null) return [
+            address.street,
+            address.zip,
+            address.city,
+            address.country.code
+          ].join(",");
+          return "inconnue";
+        }
+      }, {
+        on: "job",
+        execute: jobs => {
+          var latest = jobs.find(x => x.type === "LATEST");
+          if (latest != null) return latest.title;
+          return "inconnu";
+        }
+      }, {
+        on: "nbFriends",
+        execute: friends => friends.length
+      }]
+    }
+  </script>
+  <script>
+    var code = qsi("code").text;
+    qsi("codeToInsert").html(code);
+
+    var templateText = qsi("template").text;
+    qsi("templateToInsert").html(templateText);
+
+    qsi("btnTest").on("click", function() {
+      var response = qsi("response");
+      eval(qsi("templateToInsert").text());
+      eval(qsi("codeToInsert").text());
+      let outData = SmartMapper.mapping(template, entryData);
+      response.html(JSON.stringify(outData).replace(/}/g, "}\n"));
+    });
+  </script>
 </body>
 
 </html>

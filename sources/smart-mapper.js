@@ -1,21 +1,4 @@
-// ;
-// (function(moduleName, root, factory) {
-//   if (typeof define === "function" && define.amd) {
-//     define(["passthrough-object"], factory);
-//   } else if (typeof exports === "object") {
-//     var Path = require("passthrough-object");
-//     module.exports = factory(Path);
-//   } else {
-//     window.SmartMapper = factory(Path);
-//   }
-// }("SmartMapperModule", this, function(Path) {
-//   "use strict";
-
-var Path = require("passthrough-object");
-//import {get } from "passthrough-object";
-
 /* global Path */
-//var SmartMapper = {};
 
 function isDef(obj) {
   return (obj !== null && typeof obj !== "undefined");
@@ -72,7 +55,7 @@ function mapping(template, data) {
       if (template.childrens) {
         var childrens = template.childrens(m);
         if (childrens) {
-          m[childrenPropertyName] = SmartMapper.mapping(template, childrens);
+          m[childrenPropertyName] = mapping(template, childrens);
         }
       }
 
@@ -86,6 +69,4 @@ function mapping(template, data) {
 }
 
 
-//   return SmartMapper;
-// }));
 export { mapping };
