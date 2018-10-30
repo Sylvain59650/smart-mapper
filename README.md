@@ -36,24 +36,26 @@ OR
 </code>
 
 ## Without installation
-
+```html
     <script src="https://cdn.jsdelivr.net/npm/smart-mapper/distrib/smart-mapper.min.js"></script>
-
+```
 
 ## References for Nodejs
-
+```html
     const SmartMapper = require('smart-mapper');
+```
 
 ## References in browser 
-<code>
-
+```html
     <script src="node_modules/passthrough-object/distrib/passthrough-object.min.js"></script>
-  &lt;script src="./node_modules/smart-mapper/distrib/smart-mapper.min.js"&gt;&lt;/script&gt;
-</code>
+    <script src="./node_modules/smart-mapper/distrib/smart-mapper.min.js"><script>;
+```
 
 
 ## How it works
+```html
     SmartMapper.mapping(template, entryData);
+```
 
 Arguments
 
@@ -83,6 +85,8 @@ Returns
 
     json data tranformed
 
+## Usage
 
-**Notes** [See examples on GitHub](https://sylvain59650.github.io/smart-mapper/)
+See <a href="https://sylvain59650.github.io/smart-mapper/">API & DEMO</a>
+
 

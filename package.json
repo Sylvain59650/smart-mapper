@@ -1,9 +1,15 @@
 {
-  "author": "Sylvain Longepee",
+  "author": "sylvain59",
+  "maintainers": [
+    {
+      "name": "sylvain59",
+      "email": "slongepee@laposte.net"
+    }
+  ],
   "license": "MIT",
   "groupId": "slongepee",
   "artifactId": "smart-mapper",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "main": "distrib/smart-mapper.min.js",
   "name": "smart-mapper",
   "description": "A tool to mapping data in another format",

@@ -2,40 +2,211 @@
 
 <head>
   <title>smart-mapper</title>
-  <link href="https://sylvain59650.github.io/demonstrator/css/demo.css" type="text/css" rel="stylesheet" />
-  <link href="https://sylvain59650.github.io/demonstrator/css/style.css" type="text/css" rel="stylesheet" />
+  <link href="https://sylvain59650.github.io/demonstrator/css/theme1.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-  <div class="breadcrumb">
-    <a href="https://www.npmjs.com/package/smart-mapper" title="NPM">
-      <img src="https://sylvain59650.github.io/smart-mapper/img/npm.png" height="32"></a>
-    <a href="https://github.com/Sylvain59650/smart-mapper" title="GitHub"><img src="https://github.com/favicon.ico" height="32" /></a>
+  <style>
+    pre {
+      margin-top: 0
+    }
+  </style>
+  <div class="container">
+    <div>
+      <a href="https://www.npmjs.com/package/smart-mapper" title="NPM">
+        <img src="https://sylvain59650.github.io/smart-mapper/img/npm.png" height="32"></a>
+      <a href="https://github.com/Sylvain59650/smart-mapper" title="GitHub"><img src="https://github.com/favicon.ico" height="32" /></a>
+    </div>
+
+    <h1>smart-mapper</h1>
+
+    <div style="display:inline">
+      <a target="_blank" title="build" href="https://travis-ci.org/Sylvain59650/smart-mapper"><img src="https://travis-ci.org/Sylvain59650/smart-mapper.png?branch=master" /></a>
+      <a target="_blank" title="version" href="https://www.npmjs.com/package/smart-mapper"><img src="https://img.shields.io/npm/v/smart-mapper.svg" /></a>
+      <a target="_blank" title="package" href="https://github.com/Sylvain59650/smart-mapper"><img src="https://img.shields.io/github/package-json/v/Sylvain59650/smart-mapper.svg" /></a>
+      <a target="_blank" title="dependencies" href="https://david-dm.org/Sylvain59650/smart-mapper"><img src="https://img.shields.io/david/Sylvain59650/smart-mapper.svg" /></a>
+      <a target="_blank" title="dependencies graph" href="https://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
+      <img src="https://img.shields.io/bundlephobia/min/smart-mapper.svg" />
+      <img src="https://img.shields.io/badge/eslint-ok-blue.svg" />
+      <a target="_blank" title="tests" href="https://sylvain59650.github.io/smart-mapper/"><img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" /></a>
+      <img src="https://img.shields.io/npm/l/smart-mapper.svg" />
+      <img src="https://hits.dwyl.com/Sylvain59650/smart-mapper.svg" />
+    </div>
+
+
+    <nav>
+      <li><a href="#">mapping</a></li>
+    </nav>
+
+    <article id="mapping">
+      <h2>mapping</h2>
+      <div class="signature">
+        <p>mapping(<i>template</i>,<i>data</i>) </p>
+      </div>
+      <div class="arg">
+        <p><i>template</i>json object that contain 2 arrays: mappings: json object that contain in keys the destination, and in values the path in the specific object to extract rules: json object that contains methods to execute on a particular field during
+          the transformation</p>
+        <p><i>data</i>data to transform</p>
+      </div>
+      <div class="description">
+        <p>transform data to another data according the template</p>
+      </div>
+
+      <p class="example"></p>
+      <pre><xmp>
+      var persons = [{
+        name: 'Matt',
+        age: 30
+      }, {
+        name: 'Edouard',
+        age: 28
+      }, {
+        name: 'Guillaume',
+        age: 29
+      }, {
+        name: 'Roger',
+        age: 51
+      }];
+  
+  
+      var template = {
+        mappings: {
+          FirstName: 'name'
+        }
+      };
+  
+  
+      let outData = SmartMapper.mapping(template, persons);
+
+      => produces
+      outData = [
+        {FirstName:"Matt"},
+        {FirstName:"Edouard"},
+        {FirstName:"Roger"},
+      ]
+  </xmp></pre>
+
+      <p class="example"></p>
+      <pre><xmp>
+      var entryData = [{
+        person: {
+          id: "1",
+          firstname: "Jean",
+          lastname: "Valjean",
+          age: 50,
+          jobs: [{
+            title: "arboriste",
+            type: "first"
+          }, {
+            title: "braconnier",
+            type: "after"
+          }, {
+            title: "maire",
+            type: "LATEST"
+          }],
+          friends: ["Cosette", "Fauchelevent"],
+          address: {
+            street: "rue de l'Ouest",
+            zip: "75006",
+            city: "Paris",
+            country: {
+              code: "FR"
+            }
+          }
+        }
+      }, {
+        person: {
+          id: "2",
+          firstname: "Emmanuel",
+          lastname: "Macron",
+          age: 40,
+          jobs: [{
+            title: "President",
+            type: "LATEST"
+          }, {
+            title: "Banquier",
+            type: "first"
+          }],
+          friends: [
+            "Castaner",
+            "Brigitte",
+            "Trump",
+            "Francois",
+            "Matt"
+          ],
+          address: {
+            street: "Rue de l'Elysée",
+            zip: "59000",
+            city: "Paris",
+            country: {
+              code: "FR"
+            }
+          }
+        }
+      }, {
+        person: {
+          id: "3",
+          firstname: "Mario",
+          lastname: "",
+          age: 35,
+          jobs: [{
+            title: "Plombier",
+            type: "first"
+          }],
+          friends: ["Luigi", "Sonic"]
+        }
+      }]
+  
+  
+      var template = {
+        mappings: {
+          id: "person.id",
+          lastname: "person.lastname",
+          firstname: "person.firstname",
+          age: "person.age",
+          job: "person.jobs",
+          nbFriends: "person.friends",
+          address: "person.address"
+        },
+        rules: [{
+          on: "address",
+          execute: address => {
+            if (address != null) return [
+              address.street,
+              address.zip,
+              address.city,
+              address.country.code
+            ].join(",");
+            return "inconnue";
+          }
+        }, {
+          on: "job",
+          execute: jobs => {
+            var latest = jobs.find(x => x.type === "LATEST");
+            if (latest != null) return latest.title;
+            return "inconnu";
+          }
+        }, {
+          on: "nbFriends",
+          execute: friends => friends.length
+        }]
+      }
+
+      let outData = SmartMapper.mapping(template, entryData);
+
+      => produces 
+      outData = [
+        {"id":"1","lastname":"Valjean","firstname":"Jean","age":50,
+          "job":"maire","nbFriends":2,"address":"rue de l'Ouest,75006,Paris,FR"}
+        ,{"id":"2","lastname":"Macron","firstname":"Emmanuel","age":40,
+          "job":"President","nbFriends":5,"address":"Rue de l'Elysée,59000,Paris,FR"}
+        ,{"id":"3","lastname":"","firstname":"Mario","age":35,
+          "job":"inconnu","nbFriends":2,"address":"inconnue"}
+      ];
+  </xmp></pre>
+    </article>
+
   </div>
-
-  <h1>smart-mapper</h1>
-
-  <div style="display:inline">
-    <a target="_blank" title="build" href="https://travis-ci.org/Sylvain59650/smart-mapper"><img src="https://travis-ci.org/Sylvain59650/smart-mapper.png?branch=master" /></a>
-    <a target="_blank" title="version" href="https://www.npmjs.com/package/smart-mapper"><img src="https://img.shields.io/npm/v/smart-mapper.svg" /></a>
-    <a target="_blank" title="package" href="https://github.com/Sylvain59650/smart-mapper"><img src="https://img.shields.io/github/package-json/v/Sylvain59650/smart-mapper.svg" /></a>
-    <a target="_blank" title="dependencies" href="https://david-dm.org/Sylvain59650/smart-mapper"><img src="https://img.shields.io/david/Sylvain59650/smart-mapper.svg" /></a>
-    <a target="_blank" title="dependencies graph" href="https://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
-    <img src="https://img.shields.io/bundlephobia/min/smart-mapper.svg" />
-    <img src="https://img.shields.io/badge/eslint-ok-blue.svg" />
-    <a target="_blank" title="tests" href="https://sylvain59650.github.io/smart-mapper/"><img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" /></a>
-    <img src="https://img.shields.io/npm/l/smart-mapper.svg" />
-    <img src="https://hits.dwyl.com/Sylvain59650/smart-mapper.svg" />
-  </div>
-
-
-  <nav>
-    <li><a href="#">mapping</a></li>
-  </nav>
-
-
-
-
 </body>
 
 </html>
