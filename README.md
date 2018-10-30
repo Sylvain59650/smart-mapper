@@ -8,6 +8,7 @@
       <a target="_blank" title="dependencies graph" href="https://npm.anvaka.com/#/view/2d/smart-mapper"><img src="https://img.shields.io/badge/dependencies-graph-blue.svg" /></a>
       <img src="https://img.shields.io/bundlephobia/min/smart-mapper.svg" />
       <img src="https://img.shields.io/badge/eslint-ok-blue.svg" />
+      <a href="https://codeclimate.com/github/Sylvain59650/smart-mapper/maintainability"><img src="https://api.codeclimate.com/v1/badges/0268fc3162a086cae926/maintainability" /></a>
       <a target="_blank" title="tests" href="https://sylvain59650.github.io/smart-mapper/"><img src="https://img.shields.io/badge/tests-passing-brightgreen.svg" /></a>
         <a target="_blank" title="downloads" href="https://www.jsdelivr.com/package/npm/smart-mapper"><img src="https://data.jsdelivr.com/v1/package/npm/smart-mapper/badge" /></a>
     <a target="_blank" title="cdn" href="https://cdn.jsdelivr.net/npm/smart-mapper/distrib/smart-mapper.min.js"><img src="https://img.shields.io/badge/cdn-jsdeliv-black.svg" /></a>
