@@ -233,7 +233,6 @@
     "lines-around-comment": 0, // require empty lines around comments
     "max-depth": 0, // enforce a maximum depth that blocks can be nested
     "max-len": [2, { "code": 140, "tabWidth": 4, "ignoreUrls": true }], // enforce a maximum line length
-    "max-line-length": [true, 120],
     "max-lines": 0, // enforce a maximum number of lines per file
     "max-nested-callbacks": 0, // enforce a maximum depth that callbacks can be nested
     "max-params": 0, // enforce a maximum number of parameters in function definitions

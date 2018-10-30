@@ -1,0 +1,47 @@
+plugins:
+  eslint:
+      enabled: true
+      config:
+          config: .eslintrc.json
+          extensions:
+              - .js
+  csslint:
+      enabled: true
+version: "2"
+checks:
+  argument-count:
+    config:
+      threshold: 7
+  complex-logic:
+    config:
+      threshold: 6
+  file-lines:
+    config:
+      threshold: 350
+  method-complexity:
+    config:
+      threshold: 10
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 45
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 3
+exclude_patterns: 
+- "docs/"
+- "tests/"
+- "distrib/"
+- "node_modules/"
+- "gulpfile.js"
+- "*.yml"
+- "git*"
+- "package*"
+- "npm*"
+- "LICENSE"
+- "README*"
